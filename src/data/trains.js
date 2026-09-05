@@ -181,16 +181,31 @@ export const historicalJourneys = [
   { date: '14 Jul 2026', scheduled: '06:30 PM', actual: '06:52 PM', delayMin: 22, section: 'VSKP–NDLS' },
 ];
 
+// Real rake composition for Janmabhoomi Express (12805/12806), as given.
 export const coaches = [
-  { code: 'Engine', type: 'engine' },
-  { code: 'S1', type: 'sleeper' },
-  { code: 'S2', type: 'sleeper' },
-  { code: 'S3', type: 'sleeper' },
-  { code: 'S4', type: 'sleeper' },
-  { code: 'B1', type: 'ac3' },
-  { code: 'A1', type: 'ac2' },
-  { code: 'A2', type: 'ac2' },
-  { code: 'Pantry', type: 'pantry' },
+  { position: 'Engine', code: 'ENG', type: 'engine' },
+  { position: 1, code: 'SLRD', type: 'slrd' },
+  { position: 2, code: 'GEN', type: 'general' },
+  { position: 3, code: 'GEN', type: 'general' },
+  { position: 4, code: 'GEN', type: 'general' },
+  { position: 5, code: 'D11', type: 'seating' },
+  { position: 6, code: 'D10', type: 'seating' },
+  { position: 7, code: 'D9', type: 'seating' },
+  { position: 8, code: 'D8', type: 'seating' },
+  { position: 9, code: 'D7', type: 'seating' },
+  { position: 10, code: 'D6', type: 'seating' },
+  { position: 11, code: 'D5', type: 'seating' },
+  { position: 12, code: 'D4', type: 'seating' },
+  { position: 13, code: 'D3', type: 'seating' },
+  { position: 14, code: 'D2', type: 'seating' },
+  { position: 15, code: 'D1', type: 'seating' },
+  { position: 16, code: 'M2', type: 'pantry' },
+  { position: 17, code: 'M1', type: 'pantry' },
+  { position: 18, code: 'C1', type: 'ac' },
+  { position: 19, code: 'GEN', type: 'general' },
+  { position: 20, code: 'GEN', type: 'general' },
+  { position: 21, code: 'GEN', type: 'general' },
+  { position: 22, code: 'LPR', type: 'guard' },
 ];
 
 export const stationInfo = {

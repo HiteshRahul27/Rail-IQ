@@ -46,20 +46,20 @@ export default function Home() {
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   placeholder="e.g. 12806 or Andhra Express"
-                  className="mt-1 w-full rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-2 text-sm text-gray-800 dark:text-gray-200 outline-none focus:border-rail-400 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100"
+                  className="mt-1 w-full rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-2 text-sm text-gray-800 dark:text-gray-100 dark:bg-gray-900 outline-none focus:border-rail-400"
                 />
               </label>
               <label className="text-sm text-gray-500 dark:text-gray-400">
                 Journey Date
-                <input type="date" className="mt-1 w-full rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-2 text-sm text-gray-800 dark:text-gray-200 outline-none focus:border-rail-400" />
+                <input type="date" className="mt-1 w-full rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-2 text-sm text-gray-800 dark:text-gray-100 dark:bg-gray-900 outline-none focus:border-rail-400" />
               </label>
               <label className="text-sm text-gray-500 dark:text-gray-400">
                 From
-                <input defaultValue="Visakhapatnam Jn (VSKP)" className="mt-1 w-full rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-2 text-sm text-gray-800 dark:text-gray-200 outline-none focus:border-rail-400" />
+                <input defaultValue="Visakhapatnam Jn (VSKP)" className="mt-1 w-full rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-2 text-sm text-gray-800 dark:text-gray-100 dark:bg-gray-900 outline-none focus:border-rail-400" />
               </label>
               <label className="text-sm text-gray-500 dark:text-gray-400">
                 To
-                <input defaultValue="New Delhi (NDLS)" className="mt-1 w-full rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-2 text-sm text-gray-800 dark:text-gray-200 outline-none focus:border-rail-400" />
+                <input defaultValue="New Delhi (NDLS)" className="mt-1 w-full rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-2 text-sm text-gray-800 dark:text-gray-100 dark:bg-gray-900 outline-none focus:border-rail-400" />
               </label>
             </div>
             <button className="mt-4 w-full rounded-lg bg-rail-600 py-2.5 text-sm font-semibold text-white hover:bg-rail-700 sm:w-auto sm:px-6">

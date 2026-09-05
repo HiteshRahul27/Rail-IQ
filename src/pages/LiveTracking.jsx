@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Radar, Gauge, MapPin, Clock } from 'lucide-react';
 import IndiaMap from '../components/IndiaMap';
 import StatusBadge from '../components/StatusBadge';
+import JanmabhoomiPanel from '../components/JanmabhoomiPanel';
 import { demoTrain, networkTrains } from '../data/trains';
 
 const SCENARIOS = {
@@ -99,6 +100,8 @@ export default function LiveTracking() {
           </div>
         </div>
       </div>
+
+      <JanmabhoomiPanel />
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { NavLink, Outlet } from 'react-router-dom';
-import { TrainFront, Bell, CircleUserRound, Sun, Moon } from 'lucide-react';
+import { TrainFront, Bell, Sun, Moon } from 'lucide-react';
 import useTheme from '../hooks/useTheme';
 
 const NAV_ITEMS = [
@@ -59,9 +59,6 @@ export default function Layout() {
             <button className="relative rounded-full p-2 hover:bg-gray-50 dark:hover:bg-white/5" aria-label="Notifications">
               <Bell size={18} />
               <span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full bg-majorDelay" />
-            </button>
-            <button className="rounded-full p-1 hover:bg-gray-50 dark:hover:bg-white/5" aria-label="Profile">
-              <CircleUserRound size={26} />
             </button>
           </div>
         </div>

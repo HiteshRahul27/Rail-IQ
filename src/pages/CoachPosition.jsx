@@ -1,24 +1,36 @@
 import { useState } from 'react';
-import { coaches, demoTrain } from '../data/trains';
+import { coaches } from '../data/trains';
+import { janmabhoomiTrain } from '../data/janmabhoomi';
 
 const TYPE_STYLES = {
   engine: 'bg-gray-700 text-white',
-  sleeper: 'bg-rail-50 dark:bg-rail-500/10 text-rail-700 border border-rail-100',
-  ac3: 'bg-seasonal/10 text-seasonal border border-seasonal/20',
-  ac2: 'bg-demo/10 text-demo border border-demo/20',
-  pantry: 'bg-amber-50 text-amber-700 border border-amber-200',
+  slrd: 'bg-amber-50 text-amber-700 border border-amber-200 dark:bg-amber-500/10 dark:text-amber-300 dark:border-amber-500/20',
+  general: 'bg-rail-50 text-rail-700 border border-rail-100 dark:bg-rail-500/10 dark:text-rail-300 dark:border-rail-500/20',
+  seating: 'bg-seasonal/10 text-seasonal border border-seasonal/20',
+  pantry: 'bg-demo/10 text-demo border border-demo/20',
+  ac: 'bg-majorDelay/10 text-majorDelay border border-majorDelay/20',
+  guard: 'bg-gray-200 text-gray-600 border border-gray-300 dark:bg-white/10 dark:text-gray-300 dark:border-gray-600',
+};
+
+const TYPE_LABELS = {
+  general: 'General (unreserved)',
+  seating: 'Second sitting (D-class)',
+  pantry: 'Pantry / mail',
+  ac: 'AC chair car',
+  slrd: 'SLR + Divyangjan',
+  guard: 'Guard / luggage (LPR)',
 };
 
 export default function CoachPosition() {
-  const [selected, setSelected] = useState('S4');
-  const coach = coaches.find((c) => c.code === selected);
+  const [selected, setSelected] = useState(8);
+  const coach = coaches.find((c) => c.position === selected);
 
   return (
     <div className="flex flex-col gap-6">
       <div>
         <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Coach Position</h1>
         <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-          {demoTrain.number} {demoTrain.name} · estimated coach position at {demoTrain.nextStation} Junction
+          {janmabhoomiTrain.number} {janmabhoomiTrain.name} · rake composition, {janmabhoomiTrain.fromCode} → {janmabhoomiTrain.toCode}
         </p>
       </div>
 
@@ -26,35 +38,40 @@ export default function CoachPosition() {
         <p className="mb-4 text-sm font-semibold text-gray-900 dark:text-gray-100">Train composition</p>
         <div className="flex flex-wrap items-center gap-2 overflow-x-auto pb-2">
           {coaches.map((c, i) => (
-            <div key={c.code} className="flex items-center">
+            <div key={c.position} className="flex items-center">
               <button
-                onClick={() => c.type !== 'engine' && setSelected(c.code)}
-                className={`flex h-12 w-16 shrink-0 items-center justify-center rounded-lg text-xs font-semibold transition-transform ${TYPE_STYLES[c.type]} ${
-                  selected === c.code ? 'scale-110 ring-2 ring-rail-500 ring-offset-2' : ''
+                onClick={() => c.type !== 'engine' && setSelected(c.position)}
+                className={`flex h-12 w-16 shrink-0 flex-col items-center justify-center rounded-lg text-xs font-semibold transition-transform ${TYPE_STYLES[c.type]} ${
+                  selected === c.position ? 'scale-110 ring-2 ring-rail-500 ring-offset-2 dark:ring-offset-gray-800' : ''
                 }`}
               >
-                {c.code}
+                <span>{c.code}</span>
+                {typeof c.position === 'number' && <span className="text-[9px] font-normal opacity-70">#{c.position}</span>}
               </button>
-              {i < coaches.length - 1 && <span className="mx-1 h-0.5 w-3 bg-gray-200" />}
+              {i < coaches.length - 1 && <span className="mx-1 h-0.5 w-3 bg-gray-200 dark:bg-gray-600" />}
             </div>
           ))}
         </div>
         <div className="mt-4 flex flex-wrap gap-4 text-xs text-gray-500 dark:text-gray-400">
-          <span className="flex items-center gap-1"><span className="h-2.5 w-2.5 rounded bg-rail-50 dark:bg-rail-500/10 border border-rail-100" />Sleeper</span>
-          <span className="flex items-center gap-1"><span className="h-2.5 w-2.5 rounded bg-seasonal/10 border border-seasonal/20" />AC 3-tier</span>
-          <span className="flex items-center gap-1"><span className="h-2.5 w-2.5 rounded bg-demo/10 border border-demo/20" />AC 2-tier</span>
-          <span className="flex items-center gap-1"><span className="h-2.5 w-2.5 rounded bg-amber-50 border border-amber-200" />Pantry</span>
+          {Object.entries(TYPE_LABELS).map(([type, label]) => (
+            <span key={type} className="flex items-center gap-1">
+              <span className={`h-2.5 w-2.5 rounded ${TYPE_STYLES[type]}`} />
+              {label}
+            </span>
+          ))}
         </div>
       </div>
 
       <div className="grid gap-6 sm:grid-cols-2">
         <div className="rounded-2xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 shadow-card">
           <p className="text-xs font-medium uppercase tracking-wide text-gray-400 dark:text-gray-500">Selected coach</p>
-          <p className="mt-1 text-3xl font-extrabold text-rail-700">Coach: {coach.code}</p>
+          <p className="mt-1 text-3xl font-extrabold text-rail-700 dark:text-rail-300">
+            {coach.code} <span className="text-base font-medium text-gray-400 dark:text-gray-500">· Position {coach.position}</span>
+          </p>
           <div className="mt-5 grid grid-cols-2 gap-4 text-sm">
             <div>
-              <p className="text-gray-400 dark:text-gray-500">Platform</p>
-              <p className="font-medium text-gray-800 dark:text-gray-200">Platform 2</p>
+              <p className="text-gray-400 dark:text-gray-500">Class</p>
+              <p className="font-medium text-gray-800 dark:text-gray-200">{TYPE_LABELS[coach.type] || coach.type}</p>
             </div>
             <div>
               <p className="text-gray-400 dark:text-gray-500">Direction</p>
@@ -62,11 +79,11 @@ export default function CoachPosition() {
             </div>
             <div>
               <p className="text-gray-400 dark:text-gray-500">Boarding Zone</p>
-              <p className="font-medium text-gray-800 dark:text-gray-200">Zone C, near foot-over bridge</p>
+              <p className="font-medium text-gray-800 dark:text-gray-200">Zone {String.fromCharCode(65 + Math.floor((coach.position - 1) / 6))}</p>
             </div>
             <div>
               <p className="text-gray-400 dark:text-gray-500">Estimated Coach Position</p>
-              <p className="font-medium text-gray-800 dark:text-gray-200">Marker C4</p>
+              <p className="font-medium text-gray-800 dark:text-gray-200">Marker C{coach.position}</p>
             </div>
           </div>
           <p className="mt-4 rounded-lg bg-gray-50 dark:bg-white/5 px-3 py-2 text-xs text-gray-400 dark:text-gray-500">
@@ -80,9 +97,9 @@ export default function CoachPosition() {
             <div className="flex w-full items-center gap-1">
               {coaches.map((c) => (
                 <div
-                  key={c.code}
-                  className={`flex h-8 flex-1 items-center justify-center rounded text-[10px] font-semibold ${
-                    c.code === selected ? 'bg-rail-600 text-white' : 'bg-white dark:bg-gray-800 text-gray-400 dark:text-gray-500 ring-1 ring-inset ring-gray-200'
+                  key={c.position}
+                  className={`flex h-8 flex-1 items-center justify-center rounded text-[9px] font-semibold ${
+                    c.position === selected ? 'bg-rail-600 text-white' : 'bg-white dark:bg-gray-700 text-gray-400 dark:text-gray-400 ring-1 ring-inset ring-gray-200 dark:ring-gray-600'
                   }`}
                 >
                   {c.code}
@@ -90,7 +107,7 @@ export default function CoachPosition() {
               ))}
             </div>
           </div>
-          <p className="mt-3 text-center text-xs text-gray-400 dark:text-gray-500">Platform 2 · marker positions are approximate for the demo train</p>
+          <p className="mt-3 text-center text-xs text-gray-400 dark:text-gray-500">22 coaches · marker positions are approximate for the demo</p>
         </div>
       </div>
     </div>
