@@ -35,7 +35,7 @@ export default function Home() {
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              navigate(query.trim() ? `/trains?q=${encodeURIComponent(query.trim())}` : '/trains');
+              navigate('/live-tracking');
             }}
             className="mt-8 rounded-2xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 shadow-card"
           >

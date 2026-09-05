@@ -1,9 +1,10 @@
 import { useState, useMemo, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import TrainCard from '../components/TrainCard';
 import { trains } from '../data/trains';
 
 export default function Trains() {
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [query, setQuery] = useState(searchParams.get('q') || '');
 
@@ -55,7 +56,10 @@ export default function Trains() {
           Journey Date
           <input type="date" className="mt-1 w-full rounded-lg border border-gray-200 dark:border-gray-700 px-3 py-2 text-sm text-gray-800 dark:text-gray-100 dark:bg-gray-900 outline-none focus:border-rail-400" />
         </label>
-        <button className="self-end rounded-lg bg-rail-600 px-5 py-2 text-sm font-semibold text-white hover:bg-rail-700">
+        <button
+          onClick={() => navigate('/live-tracking')}
+          className="self-end rounded-lg bg-rail-600 px-5 py-2 text-sm font-semibold text-white hover:bg-rail-700"
+        >
           Search
         </button>
       </div>
