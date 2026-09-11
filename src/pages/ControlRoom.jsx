@@ -1,7 +1,8 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { ArrowDown } from 'lucide-react';
 import IndiaMap from '../components/IndiaMap';
-import { controlRoomKpis, modelPerformance, delayPropagation, networkTrains } from '../data/trains';
+import { controlRoomKpis, modelPerformance, delayPropagation, networkTrains, allTrainsStatus } from '../data/trains';
+import StatusBadge from '../components/StatusBadge';
 
 const PIPELINE = [
   'Historical Data', 'Training', 'Deployed Model', 'Real-Time Data', 'Feature Update',
@@ -111,6 +112,35 @@ export default function ControlRoom() {
             Real-time updates trigger <span className="font-semibold text-gray-700 dark:text-gray-300">inference</span>, not retraining. The
             model retrains periodically on completed journeys with logged prediction error.
           </p>
+        </div>
+      </div>
+
+      <div className="rounded-2xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 shadow-card">
+        <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">All trains — status &amp; halt reasons</p>
+        <p className="text-xs text-gray-400 dark:text-gray-500">Every train the prediction backend currently covers</p>
+        <div className="mt-4 overflow-x-auto rounded-xl border border-gray-100 dark:border-gray-700">
+          <table className="w-full text-left text-sm">
+            <thead className="bg-gray-50 dark:bg-white/5 text-xs uppercase tracking-wide text-gray-400 dark:text-gray-500">
+              <tr>
+                <th className="px-4 py-2 font-medium">Train</th>
+                <th className="px-4 py-2 font-medium">Status</th>
+                <th className="px-4 py-2 font-medium">Halt reason</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-100 dark:divide-gray-700">
+              {allTrainsStatus.map((t) => (
+                <tr key={t.trainId}>
+                  <td className="px-4 py-2.5 font-medium text-gray-800 dark:text-gray-200">{t.train}</td>
+                  <td className="px-4 py-2.5">
+                    <StatusBadge status={t.status}>
+                      {t.status === 'onTime' ? 'On time' : `+${t.delayMin} min`}
+                    </StatusBadge>
+                  </td>
+                  <td className="px-4 py-2.5 text-gray-500 dark:text-gray-400">{t.haltReason}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

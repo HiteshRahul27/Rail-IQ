@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { MapPin, Gauge, Clock, TrainFront, Radar, History, LayoutGrid, BellRing } from 'lucide-react';
+import { MapPin, Gauge, Clock, TrainFront, Radar, History, LayoutGrid, BellRing, Sparkles } from 'lucide-react';
 import StatusBadge from '../components/StatusBadge';
 import { trainDetails } from '../data/trains';
+import { predictEta } from '../lib/api';
 
 const TABS = ['Route & Schedule', 'Live Status', 'Coach Composition', 'Alerts'];
 
@@ -12,6 +13,29 @@ export default function TrainDetails() {
   const train = trainDetails[number] || trainDetails['12806'];
   const route = train.route;
   const progressPct = Math.round((train.distanceCoveredKm / train.totalDistanceKm) * 100);
+
+  // Live model prediction — falls back to the static demo figures above if
+  // the backend is unreachable (asleep on Render's free tier, offline, etc.)
+  const [livePrediction, setLivePrediction] = useState(null);
+  const [predictionState, setPredictionState] = useState('loading'); // loading | live | offline
+
+  useEffect(() => {
+    let cancelled = false;
+    setPredictionState('loading');
+    const currentIdx = route.findIndex((s) => s.state === 'current');
+    const currentStationNo = currentIdx >= 0 ? currentIdx + 1 : 1;
+    predictEta({ trainId: train.number, currentStationNo: currentStationNo || 1, currentDelay: train.delayMin })
+      .then((res) => {
+        if (cancelled) return;
+        if (res && res.predictions?.length) {
+          setLivePrediction(res.predictions[0]);
+          setPredictionState('live');
+        } else {
+          setPredictionState('offline');
+        }
+      });
+    return () => { cancelled = true; };
+  }, [train.number, train.delayMin, route]);
 
   return (
     <div className="flex flex-col gap-6">
@@ -42,7 +66,16 @@ export default function TrainDetails() {
             [MapPin, 'Current Location', train.currentLocation],
             [Gauge, 'Current Speed', `${train.currentSpeed} km/h`],
             [Radar, 'Next Station', `${train.nextStation} (${train.nextStationCode})`],
-            [Clock, 'Predicted Arrival', `${train.predictedArrival}`, train.predictionWindow],
+            [
+              Clock,
+              'Predicted Arrival (next stop)',
+              predictionState === 'live'
+                ? livePrediction.predicted_eta.split(' ')[1]
+                : train.predictedArrival,
+              predictionState === 'live'
+                ? `+${livePrediction.predicted_delay_min} min delay`
+                : train.predictionWindow,
+            ],
           ].map(([Icon, label, value, sub]) => (
             <div key={label} className="rounded-xl bg-gray-50 dark:bg-white/5 p-4">
               <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white dark:bg-gray-800 text-rail-600 shadow-sm">
@@ -53,6 +86,24 @@ export default function TrainDetails() {
               {sub && <p className="text-xs text-gray-400 dark:text-gray-500">{sub}</p>}
             </div>
           ))}
+        </div>
+
+        <div className="mt-3 flex items-center gap-1.5 text-xs">
+          {predictionState === 'live' && (
+            <span className="flex items-center gap-1 rounded-full bg-onTime/10 px-2.5 py-1 font-medium text-onTime">
+              <Sparkles size={12} /> Live model prediction
+            </span>
+          )}
+          {predictionState === 'offline' && (
+            <span className="flex items-center gap-1 rounded-full bg-gray-100 dark:bg-white/10 px-2.5 py-1 font-medium text-gray-500 dark:text-gray-400">
+              Estimated (prediction API offline — showing cached figures)
+            </span>
+          )}
+          {predictionState === 'loading' && (
+            <span className="flex items-center gap-1 rounded-full bg-gray-100 dark:bg-white/10 px-2.5 py-1 font-medium text-gray-400 dark:text-gray-500">
+              Checking live model…
+            </span>
+          )}
         </div>
 
         <div className="mt-6 flex flex-wrap gap-3">

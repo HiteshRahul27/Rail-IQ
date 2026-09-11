@@ -251,6 +251,18 @@ export const delayPropagation = [
   { train: '12841 Coromandel Express', impactMin: 2, note: 'Predicted downstream impact' },
 ];
 
+// Plain status + halt-reason table for the Control Room — every train the
+// backend model knows about, so this table (and /predict-eta) can be
+// extended together as more trains are added.
+export const allTrainsStatus = [
+  { trainId: '12805', train: '12805 Janmabhoomi Express', status: 'delayed', delayMin: 12, haltReason: 'Signal hold near Nalgonda' },
+  { trainId: '12806', train: '12806 Andhra Express', status: 'delayed', delayMin: 12, haltReason: 'Congestion, Kazipet–Warangal section' },
+  { trainId: '12727', train: '12727 Godavari Express', status: 'onTime', delayMin: 0, haltReason: '—' },
+  { trainId: '12841', train: '12841 Coromandel Express', status: 'major', delayMin: 25, haltReason: 'Technical fault, engine changeover' },
+  { trainId: '20704', train: '20704 Vande Bharat Express', status: 'onTime', delayMin: 0, haltReason: '—' },
+  { trainId: '22691', train: '22691 Rajdhani Express', status: 'delayed', delayMin: 15, haltReason: 'Crew change delay, Guntakal Jn' },
+];
+
 export const networkTrains = [
   { id: 1, x: 22, y: 18, status: 'onTime' },
   { id: 2, x: 30, y: 32, status: 'onTime' },

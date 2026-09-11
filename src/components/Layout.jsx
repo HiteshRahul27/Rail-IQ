@@ -12,6 +12,7 @@ const NAV_ITEMS = [
   { to: '/notifications', label: 'Notifications' },
   { to: '/eta-insights', label: 'ETA Insights' },
   { to: '/control-room', label: 'Control Room' },
+  { to: '/station-display', label: 'Station Display' },
   { to: '/about', label: 'About' },
 ];
 

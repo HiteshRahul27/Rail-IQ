@@ -10,6 +10,7 @@ import CoachPosition from './pages/CoachPosition';
 import Notifications from './pages/Notifications';
 import EtaInsights from './pages/EtaInsights';
 import ControlRoom from './pages/ControlRoom';
+import StationDisplay from './pages/StationDisplay';
 import About from './pages/About';
 
 export default function App() {
@@ -27,6 +28,7 @@ export default function App() {
           <Route path="/notifications" element={<Notifications />} />
           <Route path="/eta-insights" element={<EtaInsights />} />
           <Route path="/control-room" element={<ControlRoom />} />
+          <Route path="/station-display" element={<StationDisplay />} />
           <Route path="/about" element={<About />} />
         </Route>
       </Routes>
