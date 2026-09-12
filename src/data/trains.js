@@ -10,6 +10,10 @@ export const trains = [
     departure: '09:00 AM', scheduledArrival: '06:30 PM',
     predictedArrival: '06:42 PM', delayMin: 12,
     status: 'delayed',
+    delayReason: {
+      title: 'Congestion at Major Junction',
+      description: 'Heavy traffic at a busy junction has resulted in a temporary holding of the train.',
+    },
   },
   {
     number: '12727',
@@ -28,6 +32,10 @@ export const trains = [
     departure: '06:50 PM', scheduledArrival: '06:10 AM',
     predictedArrival: '06:35 AM', delayMin: 25,
     status: 'delayed',
+    delayReason: {
+      title: 'Locomotive Inspection',
+      description: "A routine locomotive inspection required additional time before the train could proceed.",
+    },
   },
   {
     number: '20704',
@@ -46,6 +54,10 @@ export const trains = [
     departure: '08:30 PM', scheduledArrival: '08:55 AM',
     predictedArrival: '09:10 AM', delayMin: 15,
     status: 'delayed',
+    delayReason: {
+      title: 'Crew Change / Operational Relief',
+      description: 'Additional time was required for scheduled crew relief at an intermediate station.',
+    },
   },
 ];
 
